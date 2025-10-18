@@ -1,0 +1,51 @@
+# ENV Vars
+.env/
+.env
+
+# ENV
+.venv/
+venv/
+venv
+
+# Python cache (fixed typo)
+__pycache__/
+__pycache__
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
