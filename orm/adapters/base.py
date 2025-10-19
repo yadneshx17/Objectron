@@ -1,5 +1,10 @@
 # BaseDialect
 
+"""
+    TO DO
+    - placeholders
+
+"""
 class BaseDialect():
     """
     The "contract" or "interface" that all database adapters must follow.

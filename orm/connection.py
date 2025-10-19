@@ -6,6 +6,11 @@ class Connection:
         self._conn = None
         self.dialect = dialect
 
+    # Context Manager
+    def __enter__(self):
+        self.connect()
+        return self
+
     def connect(self):
         if self._conn is None:
             self._conn = self.dialect.connect(self.database)
@@ -39,22 +44,18 @@ class Connection:
             print(f"[SQL] Executing: {sql} | Params: {params}")
             cursor = self.get_cursor()
             cursor.execute(sql, params or ())
-        except sqlite3.Error as e:
+        except Exception as e:
             print(f"Error {e}")
-        finally:
-            cursor.close()
-
+        # finally:
+            # cursor.close()
         return cursor
-
-    # Context Manager
-    def __enter__(self):
-        self.connect()
-        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             print("[!] Rolling back due to error.")
             self._conn.rollback()
         else:
+            print("[*] Committing Transaction.")
             self._conn.commit()
         self.close()
+        print("[=] Connection Closed")
