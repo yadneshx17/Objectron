@@ -31,6 +31,9 @@ class Connection:
         if self._conn:
             self._conn.commit()
 
+    def rollback(self):
+        if self._conn:
+            self._conn.rollback()
 
     def execute(self, sql: str, params: tuple = None):
         """

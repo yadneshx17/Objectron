@@ -49,3 +49,17 @@ Thumbs.db
 *.tmp
 *.temp
 *.bak
+
+# My Garbage
+garbage/
+garbage
+/garbage
+
+docs
+/docs
+docs/
+
+tests
+/tests
+tests/
+

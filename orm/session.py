@@ -8,11 +8,9 @@ class SessionError(Exception):
     """Base exception for session-related errors."""
     pass
 
-
 class SessionStateError(SessionError):
     """Raised when session is in an invalid state for the operation."""
     pass
-
 
 class TransactionError(SessionError):
     """Raised when transaction operations fail."""
@@ -34,14 +32,6 @@ class Session:
         # Identity Map: {(model_class, primary_key): instance}
         # e.g., {(User, 1): <User object at 0x17>}
         self._identity_map: Dict[tuple, Any] = {}
-
-    """
-    To Do
-    - fetchone
-    - fetchall
-    - get
-    - filters ( query builder ig )
-    """
 
     def add(self, instance):
         if self._committed: 

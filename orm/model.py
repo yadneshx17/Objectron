@@ -27,18 +27,26 @@ class MetaClass(type):
 		}
 
 		# Store the stolen goods on the class itself
-		attrs['__tablename__'] = attrs.get('__tablename__', name.lower() + "ss")
+		attrs['__tablename__'] = attrs.get('__tablename__', name.lower() + "s")
 		attrs['_fields'] = fields
 
+		# Finding Primary Keys
+		pk_name = None 
+		for field_name, field_obj in fields.items():
+			if field_obj.primary_key:
+				print(f"FOUND ->  {field_obj} : {field_name}")
+				pk_name = field_name
+				break
+
+		attrs['__primary_key__'] = pk_name
 
 		cls = super().__new__(cls, name, bases, attrs)
-
 		return cls
 
 class BaseModel(metaclass=MetaClass):
 	def __init__(self, **kwargs):
 		for key, value in kwargs.items():
-			setattr(self, key, value)
+			setattr(self, key, value) # set the value of named attribute of an object.
 
 	@classmethod
 	def create_table(cls, conn):
@@ -73,4 +81,4 @@ class BaseModel(metaclass=MetaClass):
 	@classmethod
 	def from_row(cls, row):
 		"""Convert a DB row into a model instance."""
-		return cls(**row)
+		return cls(**row) 
