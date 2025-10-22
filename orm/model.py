@@ -1,6 +1,6 @@
-from fields import Field
-from connection import Connection
-from adapters.sqlite import SqlDialect
+from .fields import Field
+from .connection import Connection
+from .adapters.sqlite import SqlDialect
 import os
 from dotenv import load_dotenv
 

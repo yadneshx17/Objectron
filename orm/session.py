@@ -1,7 +1,7 @@
-from connection import Connection
-from adapters.base import BaseDialect
+from .connection import Connection
+from .adapters.base import BaseDialect
 from typing import Any, Set, Dict
-from utils.query import QueryBuilder
+from .utils.query import QueryBuilder
 
 # Custom Exceptions
 class SessionError(Exception):

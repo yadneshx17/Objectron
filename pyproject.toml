@@ -1,0 +1,32 @@
+[build-system]
+requires=["setuptools>=61", "wheel"]
+build-backend= "setuptools.build_meta"
+
+[project]
+name = "objectron"                  # Your PyPI package name
+dynamic = ["version"]               # version will be read dynamically
+description = "A lightweight Python ORM built from scratch."
+readme = "README.md"
+authors = [{name = "Yadnesh Tambe"}]
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = [
+    "python-dotenv",
+]
+
+# Optional but recommended metadata
+keywords = ["ORM", "SQL", "Database", "QueryBuilder", "FastAPI"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools.packages.find]
+# Finds all packages under current dir (like orm, orm.fields, orm.adapters)
+where = ["."]
+include = ["orm*"]
+
+[tool.setuptools.dynamic]
+# Reads version directly from orm/__init__.py -> __version__ = "0.1.0"
+version = {attr = "orm.__version__"}

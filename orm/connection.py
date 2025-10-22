@@ -1,4 +1,4 @@
-from adapters.base import BaseDialect
+from orm.adapters import BaseDialect
 
 class Connection: 
     def __init__(self, db_path: str, dialect: BaseDialect = None):
