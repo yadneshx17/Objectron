@@ -13,10 +13,10 @@ features:
 
 A lightweight, **database-agnostic** Python ORM (Object-Relational Mapper) built entirely from scratch for learning, simplicity, and usability.
 
-**Project Goal** 
+### Project Goal 
 > To understand and implement ORM internals from first principles while keeping the codebase clean, minimal, and usable like a mini version of SQLAlchemy or Django ORM.
 
-###  Features
+##  Features
 Objectron provides the essential features you need from an ORM:
 
 - **Model-to-table Mapping:** Define database tables using simple Python classes; Objectron automatically maps them to SQL tables.
@@ -50,7 +50,7 @@ Objectron provides the essential features you need from an ORM:
     <User(id=1, name='Yadnesh', email='yadnesh@example.com', age=19)>
     ```
 
-### Installation
+## Installation
 For local development:
 
 ```bash
@@ -64,7 +64,7 @@ For Use in Other Projects (e.g., FastAPI)
 $ pip install objectron-0.1.0-py3-none-any.whl
 ```
 
-### Quick Start Example
+## Quick Start Example
 ```python
 from orm import Connection, Session, BaseModel
 from orm.adapters import SqlDialect
@@ -109,7 +109,7 @@ with Session(conn) as db:
         print(f"All Users: {user.name} ({user.age})")
 ```
 
-### Example Integration with FastAPI
+## Example Integration with FastAPI
 
 Seamlessly integrate Objectron with FastAPI and Pydantic for real-world APIs.
 
@@ -213,7 +213,7 @@ def get_users_by_age(age: int, db: Session = Depends(get_db)):
     return users
 ```
 
-### Project Structure
+## Project Structure
 ```
 orm/
  ├── __init__.py          # Exports core ORM interfaces
@@ -228,14 +228,14 @@ orm/
       └── query.py        # Query builder logic
 ```
 
-### Future Plans
+## Future Plans
 - Support for more dialects (PostgreSQL, MySQL)
 - Async ORM support
 - Relationship handling (OneToMany, ManyToMany)
 - Query optimization layer
 - Migrations and schema sync
 
-### Note
+## Note
 
 *This project started as a **learning experiment** and evolved into a **usable**, **modular mini ORM**.<br>
 I plan to continue maintaining Objectron — improving documentation, adding new features, and keeping it a **learning-friendly open-source ORM reference**.*
