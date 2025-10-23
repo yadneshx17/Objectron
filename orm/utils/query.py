@@ -31,18 +31,19 @@ class QueryBuilder():
         if row is None:
             return None
 
-        column_name = [descriptor[0] for descriptor in cursor.description ]
-        print(column_name)
-        for r in row:
-            print(f"{r} | ", end='')
-        print()
+        # column_name = [descriptor[0] for descriptor in cursor.description ]
+        # print(column_name)
+        # for r in row:
+        #     print(f"{r} | ", end='')
+        # print()
 
         # Create model instance from database row
         instance = self._model.from_row(row)
+        # instance = self._model.from_row(row, session=self._session)
         
         # # Store in identity map for future lookups
         self._session._identity_map[key] = instance
-        print(f"IDENTITY MAP: {self._session._identity_map}")
+        # print(f"IDENTITY MAP: {self._session._identity_map}")
         return instance
 
     def all(self):
@@ -55,7 +56,7 @@ class QueryBuilder():
         if not rows:
             return []
 
-        # column_name = [descriptor[0] for descriptor in cursor.description ]
+        column_names = [descriptor[0] for descriptor in cursor.description ]
         # print(column_name)
         # for r in rows:
         #     print(dict(r))

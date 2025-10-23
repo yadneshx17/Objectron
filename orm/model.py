@@ -48,12 +48,40 @@ class BaseModel(metaclass=MetaClass):
 		for key, value in kwargs.items():
 			setattr(self, key, value) # set the value of named attribute of an object.
 
+	def __repr__(self):
+		"""
+		Human-readable representation: <Class(field1=value1, field2=value2)>
+		"""
+		field_values = ", ".join(
+			f"{field}={getattr(self, field)!r}" for field in self._fields
+		)
+		return f"<{self.__class__.__name__}({field_values})>"
+
 	@classmethod
 	def create_table(cls, conn):
 		"""Generate and execute CREATE TABLE statement."""
 		columns = [field.to_sql() for field in cls._fields.values()]
 		sql = f"CREATE TABLE IF NOT EXISTS {cls.__tablename__} ({', '.join(columns)})"
 		conn.execute(sql)
+
+	@classmethod
+	def from_row(cls, row, session=None):
+		"""
+		Convert a database row into a model instance.
+		If session is provided, use identity map to avoid duplicates.
+		"""
+
+		key = (cls, row[cls.__primary_key__])
+
+		if session and key in session._identity_map:
+			return session._identity_map[key]
+			
+		instance = cls(**{col: row[col] for col in row.key()})
+
+		if session:
+			session._identity_map[key] = instance
+
+		return instance
 
 	def _insert(self, conn):
 		"""Insert current object into the DB."""

@@ -103,8 +103,6 @@ class BooleanField(Field):
     def to_db(self, value):
         return None if value is None else (1 if value else 0)
 
-
-
 class ForeignKey(Field):
     def __init__(self, to, *, nullable: bool = True, on_delete: str = None):
         # `to` is the referenced Model class (or string)

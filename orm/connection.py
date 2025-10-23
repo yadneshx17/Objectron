@@ -14,7 +14,7 @@ class Connection:
     def connect(self):
         if self._conn is None:
             self._conn = self.dialect.connect(self.database)
-            print(f"[*] Connected to '{self.database[-8:]}'")
+                # print(f"[*] Connected to '{self.database[-10:]}'") # log
         return self._conn
 
     def get_cursor(self):
