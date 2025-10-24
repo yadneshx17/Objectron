@@ -53,8 +53,8 @@ class Connection:
         try: 
             if self._conn is None:
                 self.connect()
-            except Exception as e:
-                raise ConnectionError("Failed to connect to database.")
+        except Exception as e:
+            raise ConnectionError("Failed to connect to database.")
         return self
 
     def connect(self) -> Any:
@@ -162,9 +162,9 @@ class Connection:
         except Exception as e:
             print(f"[!] Error: {e}")
             raise QueryError(f"Query execution failed: {e}")
-        finally:
-            if cursor:
-                cursor.close()
+        # finally:
+        #     if cursor:
+        #         cursor.close()
 
     def __exit__(self, exc_type, exc_value, traceback):
         """
