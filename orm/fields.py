@@ -91,8 +91,10 @@ class TextField(Field):
 
 class BooleanField(Field):
     def get_sql_type(self):
+        """proper Booleans are yet to be implemented"""
+        pass
         # SQLite has no true boolean; use INTEGER for MVP
-        return "INTEGER"
+        # return "INTEGER"  
 
     def to_python(self, value):
         if value is None:
