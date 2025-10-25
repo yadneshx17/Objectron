@@ -45,7 +45,7 @@ Objectron provides the essential features you need from an ORM:
     db.query(User).where(User.age > 18).first()
     ```
 
-- **Readable Object Representation:**  Results display clearly:
+- **Readable Object Representation:**  Results display clearly.
     ```python
     <User(id=1, name='Yadnesh', email='yadnesh@example.com', age=19)>
     ```
@@ -61,6 +61,7 @@ $ pip install -e .
 For Use in Other Projects (e.g., FastAPI)
 
 ```bash
+$ cd dist
 $ pip install objectron-0.1.0-py3-none-any.whl
 ```
 
