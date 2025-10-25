@@ -80,6 +80,9 @@ class Session:
         self._dirty.clear()
         self._deleted.clear()
 
+    # def close(self):
+    #     self._conn.close()
+
     def rollback(self):
         """Rollback the current transaction and clear session state."""
         self._conn.rollback()

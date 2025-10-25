@@ -5,9 +5,9 @@ from typing import Optional
 
 
 """
-		To Do: Dialect Aware
+	To Do: Dialect Aware
 
-			Placeholder: Dialect-aware by using connection's dialect.
+		Placeholder: Dialect-aware by using connection's dialect.
 """
 
 class ModelError(Exception):
@@ -116,7 +116,7 @@ class BaseModel(metaclass=MetaClass):
 			sql = f"CREATE TABLE IF NOT EXISTS {cls.__tablename__} ({', '.join(columns)})"
 			conn.execute(sql)
 		except Exception as e:
-			raise ModelError("[!] Failed to Create a table: {e}")
+			raise ModelError(f"[!] Failed to Create a table: {e}")
 
 	@classmethod
 	def from_row(cls, row, session: Optional["Session"] = None) -> "BaseModel":
