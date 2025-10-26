@@ -81,7 +81,7 @@ class User(BaseModel):
 
 # 2. Set up the connection (e.g., for SQLite)
 dialect = SqlDialect()
-conn = Connection("my_database.db", dialect)
+# conn = Connection("my_database.db", dialect)u
 
 # 3. Create the table (run this once)
 User.create_table(conn) 
@@ -121,6 +121,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel as PydanticModel
 from typing import Optional, List
 import os
+from contextlib import asynccontextmanager
 
 from orm import Connection, Session, BaseModel
 from orm.adapters import SqlDialect
@@ -155,10 +156,19 @@ class UserRead(PydanticModel):
 # --- 3. Database Connection ---
 dialect = SqlDialect()
 db_path = os.getenv('DB_PATH', 'fastapi_example.db')
-conn = Connection(db_path, dialect)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+        print("[=] Starting up... creating tables if not exist")
+    conn = Connection(db_path, dialect)
+    with conn: 
+        User.create_table(conn)  # this will create your table
+    print("[=] Tables created (if not existed).")
+    yield
+    print("[=] Shutting down...")
 
 # --- 4. FastAPI App Setup ---
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 # Create table on startup (using FastAPI's lifespan event is a clean way)
 @app.on_event("startup")
@@ -168,8 +178,13 @@ def on_startup():
 
 # Dependency to get a DB session for each request
 def get_db():
+    conn = Connection(db_path, dialect)
     with Session(conn) as db:
-        yield db
+        try:
+            yeild db
+        except Exception as e:
+            db.rollback()
+            raise
 
 # --- 5. API Endpoints ---
 
@@ -184,7 +199,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         age=user.age
     )
     db.add(new_user)
-    db.commit()
+    # The session's __exit__ will auto-commit.
     return new_user  # Pydantic's UserRead will convert this ORM object
 
 @app.get("/users/", response_model=List[UserRead])
