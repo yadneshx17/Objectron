@@ -60,20 +60,20 @@ docs
 ./docs
 docs/
 
-tests
-/tests
-./tests
-tests/
+# tests
+# /tests
+# ./tests
+# tests/
 
 testApp
 /testApp
 ./testApp
 testApp/
 
-dist
-dist/
-/dist
-./dist
+# dist
+# dist/
+# /dist
+# ./dist
 
 objectron.egg-info
 objectron.egg-info/
