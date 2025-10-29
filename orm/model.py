@@ -3,11 +3,10 @@ from .connection import Connection # Use our Connection class
 from .session import Session # Forward-declare for type hints
 from typing import Optional
 
-
 """
-	To Do: Dialect Aware
+	To Do: Dialect Support 
 
-		Placeholder: Dialect-aware by using connection's dialect.
+		- Placeholder: Dialect-aware by using connection's dialect.
 """
 
 class ModelError(Exception):
@@ -153,6 +152,9 @@ class BaseModel(metaclass=MetaClass):
 		"""
 		Insert current object into the DB.
 		
+		Args: 
+			conn (Connection): The connection to the database.
+
 		To Do:
 			Placeholder: Dialect-aware by using connection's dialect.
 		"""
@@ -161,11 +163,17 @@ class BaseModel(metaclass=MetaClass):
 
 		placeholders = ", ".join(["?"] * len(vals))
 		sql = f"INSERT INTO {self.__tablename__} ({', '.join(cols)}) VALUES ({placeholders})"
+		
+		# Main Sql Executer
 		conn.execute(sql, vals)
 
 	def _update(self, conn) -> None:
-		"""Update existing record."""
+		"""
+		Update existing record.
 		
+		Args: 
+			conn (Connection): The connection to the database.
+		"""
 		# Get columns and values.
 		cols = [f"{f.name}=?" for f in self._fields.values() if not f.primary_key]
 		vals = [getattr(self, f.name) for f in self._fields.values() if not f.primary_key]
@@ -177,7 +185,13 @@ class BaseModel(metaclass=MetaClass):
 		conn.execute(sql, vals)
 
 	def _delete(self, conn) -> None:
-		"""Delete record."""
+		"""
+		Delete record.
+		
+		Args: 
+			conn (Connection): The connection to the database.
+		"""
+		
 		pk_val = getattr(self, self.__primary_key__)
 		sql = f"DELETE FROM {self.__tablename__} WHERE {pk_val}=?"
 		conn.execute(sql, [getattr(self, pk_val)]) # passes params as a list.
