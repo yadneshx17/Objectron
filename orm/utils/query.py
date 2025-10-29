@@ -8,16 +8,12 @@ This module contains the `QueryBuilder` class, which offers a fluent, chainable
 interface for building SQL queries, including filtering, ordering, limiting,
 and more.
 """
-
-import logging
 from typing import Any, List, Optional, Tuple, Type
 
 # Forward declare types to avoid circular import issues
 if False:
     from ..model import BaseModel
     from ..session import Session
-
-logger = logging.getLogger(__name__)
 
 class QueryBuilder():
     """
@@ -43,8 +39,6 @@ class QueryBuilder():
         self._order_by_clause = None
         self._limit_value = None
         self._offset_value = None
-        logger.debug(f"QueryBuilder initialized for model '{self._model.__name__}'")
-
 
     def get(self, primary_key: Any) -> Optional["BaseModel"]:
         """
@@ -171,7 +165,6 @@ class QueryBuilder():
                     f"Field '{field}' does not exist on {self._model.__name__}"
                 )
             self._where_conditions.append((field, "=", value))
-        logger.debug(f"Added filter condition: {kwargs}")
         return self
     
     # def where(self, condition):
