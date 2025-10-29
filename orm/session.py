@@ -168,6 +168,7 @@ class Session:
             len(self._deleted),
         )
 
+        # Operations in DB.
         try:
             for obj in self._new:
                 logger.debug("Inserting: %s", obj)
