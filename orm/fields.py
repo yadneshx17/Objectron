@@ -24,7 +24,7 @@ class Field:
         # basic validation/coercion
         value = self.to_python(value)
         # enforce not-null
-        if value is None and not self.nullable and not self.primary_key: 
+        if value is None and not self.nullable and not self.primary_key:
             raise ValueError(f"Field '{self.name}' cannot be NULL")
         instance.__dict__[self.name] = value
 
@@ -72,7 +72,7 @@ class IntegerField(Field):
             return None
         return int(value)
 
-    
+
 class FloatField(Field):
     def get_sql_type(self):
         return "REAL"
@@ -94,7 +94,7 @@ class BooleanField(Field):
         """proper Booleans are yet to be implemented"""
         pass
         # SQLite has no true boolean; use INTEGER for MVP
-        # return "INTEGER"  
+        # return "INTEGER"
 
     def to_python(self, value):
         if value is None:
