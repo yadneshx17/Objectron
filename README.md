@@ -254,7 +254,7 @@ orm/
 ## Note
 
 *This project started as a **learning experiment** and evolved into a **usable**, **modular mini ORM**.<br>
-I plan to continue maintaining Objectron — improving documentation, adding new features, and keeping it a **learning-friendly open-source ORM reference**.*
+I plan to continue maintaining Objectron; improving documentation, adding new features, and keeping it a **learning-friendly open-source ORM reference**.*
 
 ### 📝 License
 
