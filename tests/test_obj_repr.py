@@ -175,7 +175,7 @@ def test_advanced_querying():
         query = session.query(User)
         print(f"   Initial query: {query}")
         
-        query = query.filter(is_active=True)
+        query = query.filter(is_active=1)
         print(f"   After filter: {query}")
         
         query = query.order_by('age')
@@ -186,6 +186,13 @@ def test_advanced_querying():
         
         results = query.all()
         print(f"   Final results: {len(results)}")
+
+        result = session.query(User).filter(is_active=1).order_by('age').limit(3).all()
+        print(f"RESULT {result}")
+
+
+        Get_User = session.query(User)
+        print(f"Get User> {Get_User}")
 
 if __name__ == "__main__":
     test_query_builder_methods()

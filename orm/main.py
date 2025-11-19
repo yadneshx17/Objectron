@@ -17,8 +17,8 @@ logging.basicConfig(
     level=logging.INFO,
     # filename='app.log',                         # Tell it to write to a file
     # filemode='w',                               # 'w' for overwrite, 'a' for append (default)
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s' # message format
-) 
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",  # message format
+)
 
 logger = logging.getLogger(__name__)
 

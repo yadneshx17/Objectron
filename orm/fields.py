@@ -1,9 +1,18 @@
 from typing import Any, Optional
 
+
 class Field:
     """Base Field descriptor and metadata container"""
-    def __init__(self, *, primary_key: bool = False, nullable: bool = False, default: Any = None, unique: bool = False):
-        self.name: Optional[str] = None   # set by __set_name__
+
+    def __init__(
+        self,
+        *,
+        primary_key: bool = False,
+        nullable: bool = False,
+        default: Any = None,
+        unique: bool = False,
+    ):
+        self.name: Optional[str] = None  # set by __set_name__
         # self.column_type = column_type
         self.primary_key = primary_key
         self.nullable = nullable
@@ -18,7 +27,9 @@ class Field:
         if instance is None:
             # accessed as MyModel.field -> return field object for introspection
             return self
-        return instance.__dict__.get(self.name, self.default if self.default is not None else None)
+        return instance.__dict__.get(
+            self.name, self.default if self.default is not None else None
+        )
 
     def __set__(self, instance, value):
         # basic validation/coercion
@@ -82,12 +93,14 @@ class FloatField(Field):
             return None
         return float(value)
 
+
 class TextField(Field):
     def get_sql_type(self):
         return "TEXT"
 
     def to_python(self, value):
         return None if value is None else str(value)
+
 
 class BooleanField(Field):
     def get_sql_type(self):
@@ -104,6 +117,7 @@ class BooleanField(Field):
 
     def to_db(self, value):
         return None if value is None else (1 if value else 0)
+
 
 class ForeignKey(Field):
     def __init__(self, to, *, nullable: bool = True, on_delete: str = None):

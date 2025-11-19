@@ -1,5 +1,3 @@
 from .query import QueryBuilder
 
-__all__ = [
-    "QueryBuilder"
-]
+__all__ = ["QueryBuilder"]

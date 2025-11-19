@@ -4,7 +4,7 @@ connection.py
 
 Handles database connections for Objectron ORM.
 
-Provides the Connection class which abstracts connection to 
+Provides the Connection class which abstracts connection to
 different databses via adapters/dialects, executing queries,
 and managing transactoin.
 """
@@ -12,24 +12,30 @@ and managing transactoin.
 from orm.adapters import BaseDialect
 from typing import Any
 
+
 # custom errors
 class ConnectionError(Exception):
     """Base exception for connection-related errors."""
+
     pass
+
 
 class QueryError(ConnectionError):
     """Raised when a query fails."""
+
     pass
 
-class Connection: 
+
+class Connection:
     """
     Manges a database connetion.
 
-    Attributes: 
+    Attributes:
         db_path (str): Path or URL of the database.
         dialect (Sqldialect): Database adapter for generating SQL queries.
         connection (Any): The low-level database connection object.
     """
+
     def __init__(self, db_path: str, dialect: BaseDialect) -> None:
         """
         Initialize a Connection object.
@@ -50,7 +56,7 @@ class Connection:
         Returns:
             self: The Connection object.
         """
-        try: 
+        try:
             if self._conn is None:
                 self.connect()
         except Exception as e:
@@ -63,7 +69,7 @@ class Connection:
 
         Returns:
             Any: The database connection object.
-        """ 
+        """
         try:
             if self._conn is None:
                 self._conn = self.dialect.connect(self.database)
@@ -79,7 +85,7 @@ class Connection:
         Returns:
             sqlite3.Cursor: The database cursor object associated with the current database connection.
 
-        Raises: 
+        Raises:
             ConnectionError: If the database connection is not established.
         """
 
@@ -135,7 +141,7 @@ class Connection:
             except Exception as e:
                 print("[!] Transaction rollback failed.")
                 raise ConnectionError(f"Failed to rollback transaction: {e}")
-        else: 
+        else:
             raise ConnectionError("Database not connected. Call connect() first.")
 
     def execute(self, sql: str, params: tuple = (None)) -> Any:
@@ -143,16 +149,18 @@ class Connection:
         Execute a SQL query on the database. Universal Sql Executer.
 
         Parameter -> Prevents sql injection, instead of concatenation.
-        
+
         Args:
             sql (str): Sql statement to execute.
             params (tuple, optional): Query parameters.
 
-        Returns: 
+        Returns:
             Any: cursor object.
         """
         if not self._conn:
-            raise ConnectionError("Cannot execute query: no active connection. Use a 'with' block.")
+            raise ConnectionError(
+                "Cannot execute query: no active connection. Use a 'with' block."
+            )
 
         try:
             print(f"[SQL] Executing: {sql} | Params: {params}")
@@ -180,7 +188,7 @@ class Connection:
                 print("[!] Rolling back due to error.")
                 self._conn.rollback()
             else:
-                print("[*] Committing Transaction.") 
+                print("[*] Committing Transaction.")
                 self._conn.commit()
         except Exception as e:
             raise ConnectionError(f"Failed to exit context manager: {e}")

@@ -260,7 +260,7 @@ class Session:
         """
         # Lifecycle event
         logger.info("Session context entered, connection opened.")
-        
+
         self._conn.connect()
 
         return self
